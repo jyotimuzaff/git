@@ -58,12 +58,13 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
 	while (i < argc) {
 		struct object_id oid;
 		const char *name = argv[i++];
+
 		if (get_oid(name, &oid)) {
 			had_error = !!error("tag '%s' not found.", name);
 			continue;
 		}
 
-		if (gpg_verify_tag(oid.hash, name, flags)) {
+		if (gpg_verify_tag(&oid, name, flags)) {
 			had_error = 1;
 			continue;
 		}
